@@ -19,9 +19,8 @@ jobs:
         with:
           node-version: "13.6.0"
       - run: |
-          node -v
-          npm install
-          npm run convert
+          yarn add md-to-pdf
+          npx md-to-pdf ./articles.md
       - uses: actions/upload-artifact@v1
         with:
           name: md-to-pdf

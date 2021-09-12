@@ -20,8 +20,6 @@
   },
   "homepage": "https://github.com/sfc-projects/articles#readme",
   "dependencies": {
-    "highlight.js": "^11.2.0",
-    "md-to-pdf": "^4.0.1",
-    "stable": "^0.1.8"
+    "md-to-pdf": "^4.0.1"
   }
 }

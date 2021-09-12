@@ -21,6 +21,7 @@ jobs:
       - run: |
           node -v
           npm install
+          npm install core-util-is
           npm run convert
       - uses: actions/upload-artifact@v1
         with:

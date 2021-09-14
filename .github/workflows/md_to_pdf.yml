@@ -15,7 +15,7 @@ jobs:
       - name: Set current datetime
         id: datetime
         run: |
-          DATETIME=`date +"%Y-%m-%dT%H:%M:%S"`
+          DATETIME=`date +"%Y-%m-%d %H:%M:%S"`
           echo ::set-output name=datetime::$DATETIME
       - name: Checkout
         uses: actions/checkout@v2
@@ -34,7 +34,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
+          tag_name: ${{ github.repository }} ${{ steps.datetime.outputs.datetime }}
           release_name: Relase ${{ github.repository }} ${{ steps.datetime.outputs.datetime }}
           body: Compiled PDF ${{ github.repository }}
           draft: false

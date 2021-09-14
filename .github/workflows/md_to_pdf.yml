@@ -12,16 +12,50 @@ jobs:
     name: MD to PDF
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Set current datetime
+        id: datetime
+        run: |
+          DATETIME=`date +"%Y-%m-%d_%H:%M:%S"`
+          echo ::set-output name=datetime::$DATETIME
+      - name: UUIDGEN
+        id: uuidgen
+        run: |
+          UUID=`uuidgen`
+          echo ::set-output name=uuid::$UUID
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v2.4.0
+      - name: Setup Node
+        uses: actions/setup-node@v2.4.0
         with:
           node-version: 12.x
       - run: |
           yarn add md-to-pdf
           npx md-to-pdf ./articles.md
-      - uses: actions/upload-artifact@v1
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.uuidgen.outputs.uuid }}
+          release_name: ${{ steps.datetime.outputs.datetime }}
+          body: Compiled PDF ${{ github.repository }}
+          draft: false
+          prerelease: false
+      - name: Upload Release
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./articles.pdf
+          asset_name: articles.pdf
+          asset_content_type: application/pdf 
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
         with:
           name: md-to-pdf
           path: ./articles.pdf

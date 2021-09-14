@@ -10,14 +10,12 @@ on:
 jobs:
   lint:
     name: MD to PDF
-    runs-on: ubuntu-latest
+    runs-on: macos-11
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - uses: actions/setup-node@v1
-        with:
-          node-version: "13.6.0"
       - run: |
           yarn add md-to-pdf
           npx md-to-pdf ./articles.md

@@ -17,6 +17,12 @@ jobs:
         run: |
           DATETIME=`date +"%Y-%m-%d_%H:%M:%S"`
           echo ::set-output name=datetime::$DATETIME
+      - name: Tag Action
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump: "minor"
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -34,7 +40,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.repository }}_${{ steps.datetime.outputs.datetime }}
+          tag_name: ${{ steps.tag_version.outputs.new_tag }}
           release_name: Relase ${{ github.repository }} ${{ steps.datetime.outputs.datetime }}
           body: Compiled PDF ${{ github.repository }}
           draft: false

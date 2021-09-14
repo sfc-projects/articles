@@ -12,6 +12,11 @@ jobs:
     name: MD to PDF
     runs-on: macos-latest
     steps:
+      - name: Set current datetime
+        id: datetime
+        run: |
+          DATETIME=`date +"%Y-%m-%dT%H:%M:%S"`
+          echo ::set-output name=datetime::$DATETIME
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -30,8 +35,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Relase ${{ github.ref }}
-          body: Compiled PDF ${{ github.ref }}
+          release_name: Relase ${{ github.repository }} ${{ steps.datetime.outputs.datetime }}
+          body: Compiled PDF ${{ github.repository }}
           draft: false
           prerelease: false
       - name: Upload Release

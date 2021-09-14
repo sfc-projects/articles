@@ -17,6 +17,11 @@ jobs:
         run: |
           DATETIME=`date +"%Y-%m-%d_%H:%M:%S"`
           echo ::set-output name=datetime::$DATETIME
+      - name: UUIDGEN
+        id: uuidgen
+        run: |
+          UUID=`uuidgen`
+          echo ::set-output name=uuid::$UUID
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -34,7 +39,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: 0.0.0
+          tag_name: ${{ steps.uuidgen.outputs.uuid }}
           release_name: Relase ${{ github.repository }} ${{ steps.datetime.outputs.datetime }}
           body: Compiled PDF ${{ github.repository }}
           draft: false

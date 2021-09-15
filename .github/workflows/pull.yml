@@ -18,7 +18,7 @@ jobs:
           node-version: 12.x
       - run: |
           yarn add md-to-pdf
-          npx md-to-pdf ./articles.md
+          npx md-to-pdf ./articles.md --stylesheet ./styles/articles.css
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:

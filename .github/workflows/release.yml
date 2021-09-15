@@ -28,7 +28,7 @@ jobs:
           node-version: 12.x
       - run: |
           yarn add md-to-pdf
-          npx md-to-pdf ./articles.md
+          npx md-to-pdf ./articles.md --stylesheet ./styles/articles.css
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

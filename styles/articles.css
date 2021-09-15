@@ -1,0 +1,33 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: "Hiragino Mincho Pro";
+    font-size: 1.5rem;
+}
+
+h1 {
+    text-align: center;
+    font-size: 3rem;
+}
+
+h2 {
+    margin-top: 3rem;
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-weight: normal;
+    margin-top: 2rem;
+}
+
+ol > li {
+	list-style-type: none;
+	counter-increment: cnt;
+}
+
+ol > li::before {
+	content: "(" counter(cnt) ") ";
+}

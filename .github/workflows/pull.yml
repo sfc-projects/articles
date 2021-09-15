@@ -8,16 +8,6 @@ jobs:
     name: Pull Request
     runs-on: macos-latest
     steps:
-      - name: Set current datetime
-        id: datetime
-        run: |
-          DATETIME=`date +"%Y-%m-%d_%H:%M:%S"`
-          echo ::set-output name=datetime::$DATETIME
-      - name: UUIDGEN
-        id: uuidgen
-        run: |
-          UUID=`uuidgen`
-          echo ::set-output name=uuid::$UUID
       - name: Checkout
         uses: actions/checkout@v2
         with:

@@ -8,11 +8,11 @@ jobs:
     name: Release
     runs-on: macos-latest
     steps:
-      - name: Set current datetime
-        id: datetime
+      - name: Set current date
+        id: date
         run: |
-          DATETIME=`date +"%Y-%m-%d_%H:%M:%S"`
-          echo ::set-output name=datetime::$DATETIME
+          DATE=`date +"%Y-%m-%d"`
+          echo ::set-output name=datetime::$DATE
       - name: UUIDGEN
         id: uuidgen
         run: |
@@ -36,7 +36,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.uuidgen.outputs.uuid }}
-          release_name: ${{ steps.datetime.outputs.datetime }}
+          release_name: ${{ steps.datetime.outputs.date }}
           body: Compiled PDF ${{ github.repository }}
           draft: false
           prerelease: false
@@ -53,5 +53,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: Release
+          name: articles
           path: ./articles.pdf

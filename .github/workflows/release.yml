@@ -1,15 +1,11 @@
-name: MD to PDF
+name: Release
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-
 jobs:
-  lint:
-    name: MD to PDF
+  release:
+    name: Release
     runs-on: macos-latest
     steps:
       - name: Set current datetime
@@ -57,5 +53,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: md-to-pdf
+          name: Release
           path: ./articles.pdf

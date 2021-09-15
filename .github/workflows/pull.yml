@@ -32,5 +32,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: Pull Request
+          name: articles
           path: ./articles.pdf

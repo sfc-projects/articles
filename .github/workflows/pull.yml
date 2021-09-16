@@ -1,0 +1,26 @@
+name: Pull Request
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  release:
+    name: Pull Request
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Setup Node
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: 12.x
+      - run: |
+          yarn add md-to-pdf
+          npx md-to-pdf ./articles.md --stylesheet ./styles/articles.css
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: articles
+          path: ./articles.pdf

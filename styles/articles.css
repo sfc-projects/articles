@@ -31,3 +31,7 @@ ol > li {
 ol > li::before {
 	content: "(" counter(cnt) ") ";
 }
+
+table {
+    margin-left: 8rem;
+}

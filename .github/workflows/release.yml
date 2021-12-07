@@ -11,7 +11,7 @@ jobs:
       - name: Set current date
         id: date
         run: |
-          DATE=`date +"%Y-%m-%d"`
+          DATE=`date +"%Y_%m_%d"`
           echo ::set-output name=datetime::$DATE
       - name: UUIDGEN
         id: uuidgen
@@ -36,7 +36,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.uuidgen.outputs.uuid }}
-          release_name: ${{ steps.datetime.outputs.date }}
+          release_name: ${{ steps.date.outputs.datetime }}
           body: Compiled PDF ${{ github.repository }}
           draft: false
           prerelease: false
@@ -48,7 +48,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./articles.pdf
-          asset_name: articles.pdf
+          asset_name: articles_${{steps.date.outputs.datetime}}.pdf
           asset_content_type: application/pdf 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1

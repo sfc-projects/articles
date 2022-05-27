@@ -126,3 +126,9 @@ dist
 .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/node
+
+# IntelliJ
+.idea/
+
+# generated file
+*.pdf

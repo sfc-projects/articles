@@ -15,10 +15,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2.4.0
         with:
-          node-version: 12.x
+          node-version: 14.1.x
       - run: |
           yarn add md-to-pdf
-          npx md-to-pdf ./articles.md --stylesheet ./styles/articles.css
+          yarn md-to-pdf ./articles.md --stylesheet ./styles/articles.css
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:

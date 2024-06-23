@@ -17,8 +17,8 @@ jobs:
         with:
           node-version: 14.1.x
       - run: |
-          yarn add md-to-pdf
-          yarn md-to-pdf ./articles.md --stylesheet ./styles/articles.css
+          yarn install
+          yarn convert
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:

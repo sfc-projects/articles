@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "convert": "md-to-pdf ./articles.md"
+    "convert": "md-to-pdf ./articles.md --stylesheet ./styles/articles.css"
   },
   "repository": {
     "type": "git",

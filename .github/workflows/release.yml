@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'articles.md'
 jobs:
   release:
     name: Release
@@ -25,10 +27,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2.4.0
         with:
-          node-version: 14.1.x
+          node-version: '20.x'
       - run: |
-          yarn add md-to-pdf
-          yarn md-to-pdf ./articles.md --stylesheet ./styles/articles.css
+          yarn install
+          yarn convert
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

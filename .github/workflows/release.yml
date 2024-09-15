@@ -53,7 +53,7 @@ jobs:
           asset_name: articles_${{steps.date.outputs.datetime}}.pdf
           asset_content_type: application/pdf 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: articles
           path: ./articles.pdf

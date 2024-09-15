@@ -21,5 +21,8 @@
   "homepage": "https://github.com/sfc-projects/articles#readme",
   "dependencies": {
     "md-to-pdf": "^5.2.4"
+  },
+  "resolutions": {
+    "path-to-regexp": "^8.0.0"
   }
 }

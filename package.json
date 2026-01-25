@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/sfc-projects/articles#readme",
   "dependencies": {
-    "md-to-pdf": "^5.2.4"
+    "md-to-pdf": "^5.2.5",
+    "path-to-regexp": "^8.0.0"
   },
   "resolutions": {
     "path-to-regexp": "^8.0.0"

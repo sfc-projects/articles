@@ -5,21 +5,18 @@ on:
       - main
     paths:
       - 'articles.md'
+permissions:
+  contents: write
 jobs:
   release:
     name: Release
     runs-on: macos-latest
     steps:
-      - name: Set current date
-        id: date
+      - name: Set release metadata
+        id: release
         run: |
-          DATE=`date +"%Y_%m_%d"`
-          echo ::set-output name=datetime::$DATE
-      - name: UUIDGEN
-        id: uuidgen
-        run: |
-          UUID=`uuidgen`
-          echo ::set-output name=uuid::$UUID
+          echo "date=$(date +'%Y_%m_%d')" >> "$GITHUB_OUTPUT"
+          echo "tag=$(uuidgen)" >> "$GITHUB_OUTPUT"
       - name: Checkout
         uses: actions/checkout@v6
         with:
@@ -33,28 +30,21 @@ jobs:
           npm ci
           npm run convert
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.uuidgen.outputs.uuid }}
-          release_name: ${{ steps.date.outputs.datetime }}
-          body: Compiled PDF ${{ github.repository }}
-          draft: false
-          prerelease: false
-      - name: Upload Release
-        id: upload_release_asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./articles.pdf
-          asset_name: articles_${{steps.date.outputs.datetime}}.pdf
-          asset_content_type: application/pdf 
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_DATE: ${{ steps.release.outputs.date }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          cp ./articles.pdf "./articles_${RELEASE_DATE}.pdf"
+          gh release create "$RELEASE_TAG" \
+            "./articles_${RELEASE_DATE}.pdf" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "$RELEASE_DATE" \
+            --notes "Compiled PDF $GITHUB_REPOSITORY"
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: articles
           path: ./articles.pdf
+          if-no-files-found: error

@@ -21,11 +21,11 @@ jobs:
           UUID=`uuidgen`
           echo ::set-output name=uuid::$UUID
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
       - name: Setup Node
-        uses: actions/setup-node@v2.4.0
+        uses: actions/setup-node@v6
         with:
           node-version: '24.x'
           cache: npm
